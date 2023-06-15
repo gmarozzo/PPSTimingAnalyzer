@@ -79,7 +79,7 @@ process.load("EventFilter.CTPPSRawToDigi.ctppsRawToDigi_cff")
 process.load("RecoPPS.Configuration.recoCTPPS_cff")
 
 process.load('CondCore.CondDB.CondDB_cfi')
-process.CondDB.connect = 'sqlite_file:ppsDiamondTiming_calibration.sqlite' # SQLite input
+process.CondDB.connect = 'sqlite_file:../../../CTPPSTimeCalibration/ppsALL.sqlite' # SQLite input
 process.PoolDBESSource = cms.ESSource('PoolDBESSource',
         process.CondDB,
         DumpStats = cms.untracked.bool(True),
@@ -95,6 +95,8 @@ process.PoolDBESSource = cms.ESSource('PoolDBESSource',
 # JH - rerun reco sequence with new timing conditions                                                                                          
 process.load("RecoPPS.Configuration.recoCTPPS_cff")
 #process.ctppsDiamondRecHits.timingCalibrationTag=cms.string("GlobalTag:PPSTestCalibration")
+
+process.ctppsDiamondRecHits.timingCalibrationTag = ("")
 
 process.ctppsDiamondLocalTracks.recHitsTag = cms.InputTag("ctppsDiamondRecHits","","PPSTiming2")
 process.ctppsLocalTrackLiteProducer.tagDiamondTrack = cms.InputTag("ctppsDiamondLocalTracks","","PPSTiming2")
@@ -125,6 +127,8 @@ process.mydiamonds = cms.EDAnalyzer(
     maxVertices = cms.uint32(1),
     outfilename = cms.untracked.string( "output_ZeroBias.root" )
 )
+
+#process.ctppsDiamondRecHits.timingCalibrationTag = cms.string("")
 
 # Trigger                                                                                                                  
 from HLTrigger.HLTfilters.hltHighLevel_cfi import *
